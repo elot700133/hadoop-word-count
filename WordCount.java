@@ -29,11 +29,13 @@ public class WordCount {
      }
    }
 
-   public static class Reduce extends MapReduceBase implements Reducer<Text, Text, Text, IntWritable> {
-     public void reduce(Text key, Iterator<Text> values, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
+   public static class Reduce extends MapReduceBase implements Reducer<Text, Text, Text, Text> {
+     public void reduce(Text key, Iterator<Text> values, OutputCollector<Text, Text> output, Reporter reporter) throws IOException {
        int sum = 0;
        while (values.hasNext()) {
          //sum += values.next().get();
+         //values.next();
+         output.collect(key,values.next());
        }
        //output.collect(key, new IntWritable(sum));
      }
@@ -44,10 +46,10 @@ public class WordCount {
      conf.setJobName("wordcount");
 
      conf.setOutputKeyClass(Text.class);
-     conf.setOutputValueClass(IntWritable.class);
+     conf.setOutputValueClass(Text.class);
 
      conf.setMapperClass(Map.class);
-     conf.setCombinerClass(Reduce.class);
+     //conf.setCombinerClass(Reduce.class);
      conf.setReducerClass(Reduce.class);
 
      conf.setInputFormat(TextInputFormat.class);
