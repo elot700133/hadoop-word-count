@@ -31,12 +31,20 @@ public class WordCount {
 
    public static class Reduce extends MapReduceBase implements Reducer<Text, Text, Text, Text> {
      public void reduce(Text key, Iterator<Text> values, OutputCollector<Text, Text> output, Reporter reporter) throws IOException {
-       int sum = 0;
-       while (values.hasNext()) {
-         //sum += values.next().get();
-         //values.next();
-         output.collect(key,values.next());
+       
+       Set<Text> s = new HashSet<Text>();
+       while(values.hasNext()){
+         s.add(values.next());
        }
+       s.size();
+       //output.collect(key,new IntWritable(s.size()));
+
+//       int sum = 0;
+//       while (values.hasNext()) {
+//         //sum += values.next().get();
+//         //values.next();
+//         output.collect(key,values.next());
+//       }
        //output.collect(key, new IntWritable(sum));
      }
    }
