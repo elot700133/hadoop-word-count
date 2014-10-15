@@ -20,10 +20,12 @@ public class WordCount {
        StringTokenizer tokenizer = new StringTokenizer(line);
        while (tokenizer.hasMoreTokens()) {
          word.set(tokenizer.nextToken());
+         // get the filename associated with this key value
          FileSplit fileSplit = (FileSplit) reporter.getInputSplit();
          String filename = fileSplit.getPath().getName();
          Text filename_text = new Text();
          filename_text.set(filename);
+         // output to reducer (word, filename)
          output.collect(word, filename_text);
        }
      }
@@ -31,11 +33,13 @@ public class WordCount {
 
    public static class Reduce extends MapReduceBase implements Reducer<Text, Text, Text, Text> {
      public void reduce(Text key, Iterator<Text> values, OutputCollector<Text, Text> output, Reporter reporter) throws IOException {
-       
+       // push the list of filename to a Set
        Set<Text> s = new HashSet<Text>();
        while(values.hasNext()){
          s.add(values.next());
        }
+       // Then simply use size to get the number of unique filename associate
+       // with the word
        output.collect(key,new Text(Integer.toString(s.size())));
      }
    }
