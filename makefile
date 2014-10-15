@@ -1,8 +1,9 @@
 HADOOP_CLASSPATH=$(hadoop classpath)
 
 all:
+	mkdir -p class-folder
 	javac -cp `hadoop classpath` -d class-folder/ WordCount.java
-	jar -cvf ~/try-out/wordcount.jar -C class-folder/ .
+	jar -cvf ./wordcount.jar -C class-folder/ .
 clean:
 	rm -rf class-folder/*
 	rm wordcount.jar

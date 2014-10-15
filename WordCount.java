@@ -36,16 +36,7 @@ public class WordCount {
        while(values.hasNext()){
          s.add(values.next());
        }
-       s.size();
-       //output.collect(key,new IntWritable(s.size()));
-
-//       int sum = 0;
-//       while (values.hasNext()) {
-//         //sum += values.next().get();
-//         //values.next();
-//         output.collect(key,values.next());
-//       }
-       //output.collect(key, new IntWritable(sum));
+       output.collect(key,new Text(Integer.toString(s.size())));
      }
    }
 
@@ -57,7 +48,6 @@ public class WordCount {
      conf.setOutputValueClass(Text.class);
 
      conf.setMapperClass(Map.class);
-     //conf.setCombinerClass(Reduce.class);
      conf.setReducerClass(Reduce.class);
 
      conf.setInputFormat(TextInputFormat.class);

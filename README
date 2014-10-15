@@ -1,0 +1,8 @@
+
+A makefile is provided to compile the word count program
+
+$ ssh compute-0-0 
+$ hadoop jar <path/to/wordcount.jar> org.myorg.WordCount <input dir> <output dir>
+
+example:
+hadoop jar /home/to778287/try-out/wordcount.jar org.myorg.WordCount /user/to778287/input /usr/to778287/output
