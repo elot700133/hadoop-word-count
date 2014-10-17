@@ -1,3 +1,11 @@
+//
+// Author: Too Lee
+// Class: EEL6707 Data Intensive Computing
+// Assignment 3
+// Description: Read multiple files into hadoop program
+//   and count the number of files each word appears in
+// 
+
 package org.myorg;
 
 import java.io.IOException;
