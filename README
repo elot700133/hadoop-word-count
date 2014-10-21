@@ -1,8 +1,50 @@
+Too Lee
+WordCount program
 
-A makefile is provided to compile the word count program
+===============================
+Copmilation
+===============================
+A makefile is provided to compile the word count program.
 
-$ ssh compute-0-0 
-$ hadoop jar <path/to/wordcount.jar> org.myorg.WordCount <input dir> <output dir>
+  $ make 
 
-example:
-hadoop jar /home/to778287/try-out/wordcount.jar org.myorg.WordCount /user/to778287/input /usr/to778287/output
+This will compile with the provided hadoop classpath of the system and create all class files in 
+class-folder
+
+Details:
+  mkdir -p class-folder
+  javac -cp `hadoop classpath` -d class-folder/ WordCount.java
+  jar -cvf ./wordcount.jar -C class-folder/ .
+
+
+===============================
+Run
+===============================
+ssh to compute-0-0
+
+  $ ssh compute-0-0 
+
+run the run.bsh script
+
+  $ ./run.bsh <src> <dst>
+
+in my case, I did:
+
+  $ ./run.bsh /home/to778287/word-count/input /home/to778287/word-count/output13
+
+Details:
+
+  $ hadoop jar <path/to/wordcount.jar> org.myorg.WordCount <input dir> <output dir>
+
+
+===============================
+Design
+===============================
+
+The mapper class input is <byteOffset, a line from input file>
+The mapper class output is <a word within the line, the filename it was from>
+in this case it is of type <Text, Text>
+
+The reducer class input is obviously <Text,Text>
+It then tries to find the number of unique filename in the iterator and output 
+the result to file with <word, number of files it appears in>
